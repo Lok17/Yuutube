@@ -13,12 +13,23 @@ public class Register {
 		while(emailcheck) {
 			System.out.print("E-mail: ");
 			email=sc.nextLine();
-			if(MySQL.emailExist(email)) {
-				System.out.println("This email has been registered!");
-			} else if(email.length()>45) {
-				System.out.println("Name length should be less than 45");
+			
+			if(email=="") {
+				System.out.println("Please enter your email!");
 			}
-			else break;
+			else if (!Legit.check(email)) {
+				System.out.println("Invalid address format! Please enter the right email!");
+				
+			}
+			else {
+				if(MySQL.emailExist(email)) {
+					System.out.println("This email has been registered!");
+				} else if(email.length()>45) {
+					System.out.println("Name length should be less than 45");
+				}
+				else break;
+			}	
+		
 		}
 		while(namecheck) {
 			System.out.print("Name: ");

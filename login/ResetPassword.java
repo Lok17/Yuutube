@@ -11,8 +11,18 @@ public class ResetPassword {
 	public ResetPassword() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("To reset your password, please write your email");
-		System.out.print("Enter e-mail: ");
-		String email = sc.nextLine();
+		String email = null;
+		boolean b = true;
+		while(b) {
+			System.out.print("Enter e-mail: ");
+			email = sc.nextLine();
+			if(!Legit.check(email)) {
+				System.out.println("Invalid email format! Please enter the right email!");
+			} 
+			else break;
+		}
+		
+		
 		if(MySQL.emailExist(email)) {
 			System.out.println("Wait a minute. We are sending you the code...");
 			confirmCode = Integer.toString(TwoFA.ResetPassword(email));
