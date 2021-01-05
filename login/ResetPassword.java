@@ -11,9 +11,9 @@ public class ResetPassword {
 	public ResetPassword() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("To reset your password, please write your email");
-		while (true) {
-			System.out.print("Enter e-mail: ");
-			String email = sc.nextLine();
+		System.out.print("Enter e-mail: ");
+		String email = sc.nextLine();
+		if(MySQL.emailExist(email)) {
 			System.out.println("Wait a minute. We are sending you the code...");
 			confirmCode = Integer.toString(TwoFA.ResetPassword(email));
 			System.out.println("We have sent the confirmation code to you email, please check");
@@ -29,10 +29,14 @@ public class ResetPassword {
 				newPassword = sc.nextLine();
 				MySQL.resetPassword(email, newPassword);
 				System.out.println("Congratulations! You have successfully reset your password.");
-				break;
+
 			} else {
 				System.out.println("Wrong code! Please try again.");
 			}
+			
+		}
+		else {
+			System.out.println("Sorry! This email isn't registered");
 		}
 	}
 
