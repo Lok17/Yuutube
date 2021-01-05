@@ -1,4 +1,4 @@
-i transfered main program to classes, however i don't think it is a good idea to do so.
+i changed my main program to classes, however i don't think it is a good idea to do so.
 because when you new a class B inside class A, the A doesn't appear, and if you want to go back and use A again, B doesn't appear either.
 the program will be like A->B->new A and it keeps on going
 i think this is vey dangerous and may cause exception when the chain goes longer and longer and eventually it will take over your RAM
