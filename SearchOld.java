@@ -92,7 +92,7 @@ public class SearchOld {
                 
             }else if(number==2){
                 Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yuutube","root","654312");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=CONVERT_TO_NULL","root","12345678");
                 count = 0;
                 //search channel
                 String sql_channel = "select v.video_id,v.video_name,v.user_id,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name = ? order by view_count desc";
