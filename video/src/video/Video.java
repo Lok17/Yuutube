@@ -20,7 +20,7 @@ import java.util.*;
 
 public class Video {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException{
         
             
         System.out.println("Command");
@@ -34,30 +34,26 @@ public class Video {
         final String destPath = "C:\\Users\\eedre\\IdeaProjects\\playVideo\\VideoStorage\\";
         
         
+        //sample file path: D:\\Downloads\\WIX1002\\TWICE'FANCY'MV.webm
         if(operation == 1){
             System.out.print("Please enter file path: ");
             String userFilePath = sc.next();
-            System.out.print("Please enter video title: ");
+            System.out.print("Please enter video title: "); //TWICE'FANCY'MV
             String videoTitle = sc.next();
-            Videos v = new Videos(videoTitle);
-            v.setViewsCount(0);
-            v.setLikeCount(0);
-            v.setDislikeCount(0);
             Path vSrc = Paths.get(userFilePath);
             String[] splitter = userFilePath.split("\\\\");
             String vDestPath = destPath+splitter[splitter.length-1];
             Path vDest = Paths.get(vDestPath);
-            upload(vSrc, vDest, videoTitle,vDestPath);
+            upload(vSrc, vDest, videoTitle,vDestPath); 
             System.out.print("Do you want to play? [Y/N] : ");
             String yn = sc.next();
             if(yn.equalsIgnoreCase("Y")){
                 play(vDestPath);            
             }
         }else if(operation == 2){
-            System.out.print("Please enter video title you wish to delete: ");
+            System.out.print("Please enter video title you wish to delete: "); //TWICE'FANCY'MV
             String videoTitle = sc.next();
-            String deleteDest = destPath + videoTitle;
-//            delete(deleteDest);
+            deleteEntry(videoTitle);
         }  
     }
     
@@ -73,10 +69,9 @@ public class Video {
     }   
     
     //to delete video
-    public static void delete(String dest) {
-        File myObj = new File(dest);
+    public static void delete(String vdestPath) {
+        File myObj = new File(vdestPath);
         if (myObj.delete()) {
-            deleteEntry(myObj.getName());
             System.out.println("Deleted successfully: " + myObj.getName());
         } else {
             System.out.println("Failed to delete the file.");
@@ -96,8 +91,16 @@ public class Video {
         try{
             Connection connect = DriverManager.getConnection(url,username,password);
             stmt = (Statement) connect.createStatement();
-            String sql = "DELETE FROM videos WHERE video_name="+videoName;
-            
+            PreparedStatement stt = connect.prepareStatement("DELETE FROM videos WHERE video_name="+videoName);
+            ResultSet rs = stt.executeQuery("SELECT * FROM videos");
+            while(rs.next()){
+                if(videoName.equals(rs.getString("video_name"))){
+                    String addr = rs.getString("address");
+                    delete(addr);
+                    break;
+                }
+            }       
+            stt.executeUpdate();
             
         }catch(SQLException e){
             e.printStackTrace();
