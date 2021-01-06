@@ -1,28 +1,20 @@
 package video;
 import com.mysql.cj.xdevapi.Statement;
-import video.Videos;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.*;
-import java.util.*;
 
 public class Video {
 
     public static void main(String[] args) throws IOException{
-        
-            
         System.out.println("Command");
         System.out.println("1. Upload");
         System.out.println("2. Delete");
@@ -32,7 +24,6 @@ public class Video {
         int operation = sc.nextInt();
        
         final String destPath = "C:\\Users\\eedre\\IdeaProjects\\playVideo\\VideoStorage\\";
-        
         
         //sample file path: D:\\Downloads\\WIX1002\\TWICE'FANCY'MV.webm
         if(operation == 1){
@@ -87,7 +78,6 @@ public class Video {
         String username = "root";
         String password = "elgene2000";
         Statement stmt = null;
-        java.sql.Statement state=null;
         try{
             Connection connect = DriverManager.getConnection(url,username,password);
             stmt = (Statement) connect.createStatement();
@@ -128,12 +118,17 @@ public class Video {
         String url = "jdbc:mysql://localhost:3306/videos?zeroDateTimeBehavior=CONVERT_TO_NULL";
         String username = "root";
         String password = "elgene2000";
-        Statement stmt = null;
-        java.sql.Statement state=null;
-        
         try{
             Connection connect = DriverManager.getConnection(url,username,password);
-            PreparedStatement stt = connect.prepareStatement("INSERT INTO videos(video_name,user_id, view_count, like_count, dislike_count, address)VALUES(videoName,1,0,0,0, videoAddress)");
+            String query = "INSERT INTO videos(video_id,video_name,user_id, view_count, like_count, dislike_count, address)VALUES(?,?,?,?,?,?,?)";
+            PreparedStatement stt = connect.prepareStatement(query);
+            stt.setInt(1,12);
+            stt.setString(2,videoName);
+            stt.setInt(3,0);
+            stt.setInt(4,0);
+            stt.setInt(5,0);
+            stt.setInt(6,0);
+            stt.setString(7,videoAddress);
             stt.executeUpdate();            
         }catch(SQLException e){
             e.printStackTrace();
