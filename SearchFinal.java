@@ -25,15 +25,10 @@ public class SearchFinal {
     //if number == 1, search video
     //if number == 2, search channel(user_name)
     public static void search(int number, String searchContent) {
-        if(number!=1&&number!=2) {
-            System.out.println("Invalid input!");
-            return;
-        }
         
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        //used in sql statement
         try{
             int count = 0;
             if(number==1){
