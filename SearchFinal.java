@@ -33,9 +33,9 @@ public class SearchFinal {
             int count = 0;
             if(number==1){
                 Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=CONVERT_TO_NULL","root","12345678");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","654312");
                 //search video
-                String sql_video = "select video_id,video_name,user_id,view_count,like_count,dislike_count from videos where video_name = ? order by v.view_count desc";
+                String sql_video = "select video_id,video_name,user_id,view_count,like_count,dislike_count from videos where video_name = ? order by view_count desc";
                 //compile sql
                 ps = conn.prepareStatement(sql_video);
                 //assign value to ?
@@ -63,11 +63,11 @@ public class SearchFinal {
                 
                 //search video keywords
                 count = 0;
-                String sql_keyword = "select video_id,video_name,user_id,view_count,like_count,dislike_count from videos where video_name regexp ? order by v.view_count desc";
+                String sql_keyword = "select video_id,video_name,user_id,view_count,like_count,dislike_count from videos where video_name regexp ? order by view_count desc";
                 //compile sql_keyword
                 ps = conn.prepareStatement(sql_keyword);
                 //assign value to ?
-                ps.setString(1, searchContent);
+                ps.setString(1, keywordSQLSearch(searchContent));
                 //execute sql_keyword
                 rs = ps.executeQuery();
                 //ourput
@@ -90,11 +90,11 @@ public class SearchFinal {
                 
             }else if(number==2){
                 Class.forName("com.mysql.jdbc.Driver");
-                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=CONVERT_TO_NULL","root","12345678");
+                conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","654312");
                 
                 //search channel
                 count = 0;
-                String sql_channel = "select v.video_id,v.video_name,v.user_id,u.user_name,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name = ? order by v.view_count desc";
+                String sql_channel = "select v.video_id,v.video_name,v.user_id,u.user_name,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name = ? order by view_count desc";
                 //compile sql
                 ps = conn.prepareStatement(sql_channel);
                 //assign value to ?
@@ -122,11 +122,11 @@ public class SearchFinal {
                 
                 //search channel keywords
                 count = 0;
-                String sql_keyword = "select v.video_id,v.video_name,v.user_id,u.user_name,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name regexp ? order by v.view_count desc";
+                String sql_keyword = "select v.video_id,v.video_name,v.user_id,u.user_name,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name regexp ? order by view_count desc";
                 //compile sql_keyword
                 ps = conn.prepareStatement(sql_keyword);
                 //assign value to ?
-                ps.setString(1, searchContent);
+                ps.setString(1, keywordSQLSearch(searchContent));
                 //execute sql_keyword
                 rs = ps.executeQuery();
                 //ourput
@@ -172,6 +172,17 @@ public class SearchFinal {
                 }
             }
         }
+    }
+    public static String keywordSQLSearch(String str){
+        String[] keywords = str.split(" ");
+        if(keywords.length==1) return str;
+        
+        String strSqlSearch = "";
+        for (int i = 0; i < keywords.length; i++) {
+            strSqlSearch += (keywords[i]+"|");
+        }
+        strSqlSearch += keywords[0];
+        return strSqlSearch;
     }
     
     public static void outputFormat(){
