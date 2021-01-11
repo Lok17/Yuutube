@@ -24,7 +24,7 @@ public class GetTrending {
             myStmt = myConn.createStatement();
 
             myRs = myStmt.executeQuery("SELECT video_id,video_name,view_count FROM videos ORDER BY view_count DESC;");
-            System.out.println("Top 5 Trending Video In Yuutube");
+            System.out.println("\nTop 5 Trending Video In Yuutube");
             System.out.printf("%-5s %-13s %-40s %-30s\n","#","video id","video name","total view counts");
             while (myRs.next() && cnt < 5) {
                 System.out.printf("%-5d %-13s %-40s %-30s\n",order_num,myRs.getString("video_id"),myRs.getString("video_name"),myRs.getString("view_count"));
