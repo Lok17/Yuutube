@@ -122,7 +122,7 @@ public class VideoOperation {
     public static void upload(Path src, Path dest, String videoName, String videoAddress,String user_id){
         //upload video
         try {
-            Path temp = Files.move(src, dest);
+            Path temp = Files.copy(src, dest);
             if(temp != null)
             {
                 src = dest;

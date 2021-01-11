@@ -38,7 +38,7 @@ public class SearchFinal {
                 //execute sql
                 rs = ps.executeQuery();
                 //output
-                System.out.println("Video search result : ");
+                System.out.println("\nVideo search result : ");
                 outputFormat();
                 while(rs.next()){
                     String videoID = rs.getString("video_id");
@@ -58,7 +58,7 @@ public class SearchFinal {
                 
                 //search video keywords
                 count = 0;
-                String sql_keyword = "select video_id,video_name,user_id,view_count,like_count,dislike_count from videos where video_name regexp ? order by view_count desc";
+                String sql_keyword = "select video_id,video_name,user_id,view_count,like_count,dislike_count from videos where video_name regexp ? AND video_name <> '"+searchContent+"' order by view_count desc";
                 //compile sql_keyword
                 ps = conn.prepareStatement(sql_keyword);
                 //assign value to ?
@@ -66,7 +66,7 @@ public class SearchFinal {
                 //execute sql_keyword
                 rs = ps.executeQuery();
                 //ourput
-                System.out.println("Relative result : ");
+                System.out.println("\nRelative result : ");
                 outputFormat();
                 while(rs.next()){
                     String videoID = rs.getString("video_id");
@@ -96,7 +96,7 @@ public class SearchFinal {
                 //execute sql
                 rs = ps.executeQuery();
                 //output
-                System.out.println("Channel search result : ");
+                System.out.println("\nChannel search result : ");
                 outputFormat();
                 while(rs.next()){
                     String videoID = rs.getString("video_id");
@@ -116,7 +116,7 @@ public class SearchFinal {
                 
                 //search channel keywords
                 count = 0;
-                String sql_keyword = "select v.video_id,v.video_name,v.user_id,u.user_name,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name regexp ? order by view_count desc";
+                String sql_keyword = "select v.video_id,v.video_name,v.user_id,u.user_name,v.view_count,v.like_count,v.dislike_count from videos v left join users u on u.user_id=v.user_id where u.user_name regexp ? AND user_name <> '"+searchContent+"' order by view_count desc";
                 //compile sql_keyword
                 ps = conn.prepareStatement(sql_keyword);
                 //assign value to ?
@@ -124,7 +124,7 @@ public class SearchFinal {
                 //execute sql_keyword
                 rs = ps.executeQuery();
                 //ourput
-                System.out.println("Relative result : ");
+                System.out.println("\nRelative result : ");
                 outputFormat();
                 while(rs.next()){
                     String videoID = rs.getString("video_id");
