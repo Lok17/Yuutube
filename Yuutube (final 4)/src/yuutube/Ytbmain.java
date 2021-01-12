@@ -40,6 +40,7 @@ public class Ytbmain {
 					System.out.println("To enjoy our service, please log in first.");
 					System.out.println("Please select:");
 					System.out.println("1-login\n2-register\n3-forget password\nE-end program");
+                                        System.out.print("Enter Your Command: ");
 					String select = sc.nextLine();
 					if (select.equals("1")) {
 						Login log = new Login();
@@ -72,20 +73,28 @@ public class Ytbmain {
 				while (condition2) {
 					System.out.println("\nPlease select your operation");
 					System.out.println("1-video\n2-account\n3-log out");
+                                        System.out.print("Enter Your Command: ");
 					String select = sc.nextLine();
                                         
 					boolean condition3 = true;
 					if (select.equals("1")) {
 						while (condition3) {
 							System.out.println("\nvideo operation");
-							System.out.println(
-									"Please select:\n1-upload video\n2-search video\n3-search channel\n4-watch video\n5-show top 5 trending\n6-delete video\n0-return last menu");
+							System.out.println("Please select:\n1-upload video\n2-search video\n3-search channel\n4-watch video\n5-show top 5 trending\n6-delete video\n0-return last menu");
+                                                        System.out.print("Enter Your Command: ");
 							videoselect = sc.nextLine();
 							if (videoselect.equals("1")) {
+                                                                System.out.println("Enter 'exit' to exit");
 								System.out.print("Please enter file path: ");
                                                                 String userFilePath = sc.nextLine();
+                                                                if (userFilePath.equalsIgnoreCase("exit")){
+                                                                    continue;
+                                                                }
                                                                 System.out.print("Please enter video title: "); 
                                                                 String videoTitle = sc.nextLine();
+                                                                if (videoTitle.equalsIgnoreCase("exit")) {
+                                                                    continue;
+                                                                }
                                                                 Path vSrc = Paths.get(userFilePath);
                                                                 String[] splitter = userFilePath.split("\\\\");
                                                                 String vDestPath = destPath+splitter[splitter.length-1];
@@ -93,12 +102,12 @@ public class Ytbmain {
                                                                 VideoOperation.upload(vSrc, vDest, videoTitle,vDestPath,user.getUserID()); 
 							} else if (videoselect.equals("2")) {
 								
-                                                                System.out.println("Enter to search : ");
+                                                                System.out.print("Enter to search : ");
                                                                     String video = sc.nextLine();
                                                                     SearchFinal.search(1, video);
                                                                 
                                                         } else if (videoselect.equals("3")) {     
-                                                                System.out.println("Enter to search : ");
+                                                                System.out.print("Enter to search : ");
                                                                     String channel = sc.nextLine();
                                                                     SearchFinal.search(2, channel);
 
@@ -107,7 +116,7 @@ public class Ytbmain {
 							
                                                         stop:{	
                                                                 System.out.println("\nEnter 'exit' to quit\n");
-                                                                System.out.println("Enter Video Name: ");
+                                                                System.out.print("Enter Video Name: ");
                                                                 String input = sc.nextLine();
                                                                 if (input.equalsIgnoreCase("exit")){
                                                                     break stop;
@@ -116,7 +125,7 @@ public class Ytbmain {
                                                                 
                                                                 
                                                                 
-                                                                System.out.println("\nEnter Video ID: ");
+                                                                System.out.print("\nEnter Video ID: ");
                                                                 input = sc.nextLine();
                                                                 if (input.equalsIgnoreCase("exit")){
                                                                     break stop;
@@ -149,7 +158,7 @@ public class Ytbmain {
                                                         }else if (videoselect.equals("6")){
                                                             stop:{	
                                                                 System.out.println("\nEnter 'exit' to quit\n");
-                                                                System.out.println("Enter Video Name: ");
+                                                                System.out.print("Enter Video Name: ");
                                                                 String input = sc.nextLine();
                                                                 if (input.equalsIgnoreCase("exit")){
                                                                     break stop;
@@ -158,7 +167,7 @@ public class Ytbmain {
                                                                 
                                                                 
                                                                 
-                                                                System.out.println("\nEnter Video ID: ");
+                                                                System.out.print("\nEnter Video ID: ");
                                                                 input = sc.nextLine();
                                                                 if (input.equalsIgnoreCase("exit")){
                                                                     break stop;
@@ -217,6 +226,7 @@ public class Ytbmain {
             System.out.println("5-Visit video owner channel.");
             System.out.println("6-Play video");
             System.out.println("0-Go back to last menu.");
+            System.out.print("Enter Your Command: ");
             userInput = input.nextInt();
             //check if the user has interacted with the video before
             //if no, does the user want to like or dislike?
@@ -259,6 +269,7 @@ public class Ytbmain {
             System.out.println("5-Visit video owner channel.");
             System.out.println("6-Play video");
             System.out.println("0-Go back to last menu.");
+            System.out.print("Enter Your Command: ");
             userInput = input.nextInt();
             if (userInput == 1){
                 vid.downLike();
@@ -301,6 +312,7 @@ public class Ytbmain {
             System.out.println("5-Visit video owner channel.");
             System.out.println("6-Play video");
             System.out.println("0-Go back to lain menu.");
+            System.out.print("Enter Your Command: ");
             userInput = input.nextInt();
             if (userInput == 1){
                 vid.downDislike();
@@ -341,6 +353,7 @@ public class Ytbmain {
         if (vid.getUser_id() == user.getUserID()){
             System.out.println("1. View owned videos.");
             System.out.println("0. Go back.");
+            System.out.print("Enter Your Command: ");
             userInput = input.nextInt();
             if (userInput == 1){
                 viewVideoList();
@@ -355,6 +368,7 @@ public class Ytbmain {
                 System.out.println("1. Unsubscribe?");
                 System.out.println("2. View owned videos.");
                 System.out.println("0. Go back.");
+                System.out.print("Enter Your Command: ");
                 userInput = input.nextInt();
                 if (userInput == 1){
                     connection.unsubscribe(user.getUserID(), vid.getUser_id());
@@ -372,6 +386,7 @@ public class Ytbmain {
                 System.out.println("1. Subscribe?");
                 System.out.println("2. View owned videos.");
                 System.out.println("0. Go back.");
+                System.out.print("Enter Your Command: ");
                 userInput = input.nextInt();
                 if (userInput == 1){
                     connection.subscribe(user.getUserID(), vid.getUser_id());
@@ -424,7 +439,7 @@ public class Ytbmain {
         
         if (userInput == 1){
             
-            System.out.println("\nPlease type new email : ");
+            System.out.print("\nPlease type new email : ");
             String newEmail = input.nextLine();
             user.setEmail(newEmail);//update in obj
             connection.updateEmail(newEmail, user.getUserID());
@@ -433,7 +448,7 @@ public class Ytbmain {
         }
         
         if (userInput == 2){
-            System.out.println("\nPlease type in new password : ");
+            System.out.print("\nPlease type in new password : ");
             String newPassword = input.nextLine();
             user.setPassword(newPassword);
             connection.updatePassword(newPassword, user.getUserID());
@@ -445,6 +460,7 @@ public class Ytbmain {
         if (userInput == 3){
             System.out.println("\nAre you sure you want to close this account?");
             System.out.println("1-Yes \n2-No");
+            System.out.print("Enter Your Command: ");
             userInput = input.nextInt();
             if (userInput == 1){
                 //delete acc

@@ -229,7 +229,7 @@ public class DBSconnect {
         try{
             String query = "SELECT * FROM videos WHERE user_id = \'" + user_id + "\'"; 
             rs = st.executeQuery(query);
-            System.out.println("\nTop 5 Trending Video In Yuutube");
+            System.out.println("\nAll video belong to this channel");
             System.out.printf("%-5s %-13s %-30s %-30s\n","#","video id","video name","total view counts");
             
             while (rs.next()){
